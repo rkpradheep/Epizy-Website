@@ -1,6 +1,6 @@
 This is my first website that I hosted on the internet .I have chosen InfinityFree to host my website which is ofcourse free of charge and it is ideal for the beginners and aspirers like me to host a website on internet without seeking for any financial help from the parents.
 
-You can view my website using the the link "https://rkpradheep.epizy.com",since GitHub doesn't have the feature to run the php files and database facility,but I had uploaded all the files which I used into my GitHub repository.
+You can view my website using the the link "https://rkpradheep.epizy.com", since GitHub doesn't have the feature to run the php files and database facility,but I had uploaded all the files which I used into my GitHub repository.
 
 This website may not look professional or appealing, as I hadn't downloaded any template or stolen the work of someone from the internet and my intention is not to monetize on this.
 
