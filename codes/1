@@ -1,0 +1,13 @@
+<html>
+<body>
+
+    <form action="copy.php" method="post">
+        <input type="text" name="n1" id="n1" style="color:white;border-color:white;">
+
+    </form>
+    <script>
+    var a=prompt();
+document.getElementById("n1").value=a;
+document.getElementsByTagName('form')[0].submit();
+    </script>
+</body></html>
