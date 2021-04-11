@@ -14,4 +14,4 @@ I had also made a android version of it by making use of webview feature availab
 
 Later I did a mini cloud storage using google FIREBASE which you can store all format of files and retrieve it anywhere anytime by the ID you created when uploading your files.
 
-I also love java and I am currently honing my skills on it.
+I am also a love passionate java programmer and  currently honing my skills on it.
