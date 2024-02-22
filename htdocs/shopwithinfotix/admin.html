@@ -1,0 +1,231 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<style type="text/css">
+body {
+  align-items: center;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+}
+
+.form {
+  background-color: #15172b;
+  border-radius: 20px;
+  box-sizing: border-box;
+  height: 600px;
+  padding: 20px;
+  width: 320px;
+}
+
+.title {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 36px;
+  font-weight: 600;
+  margin-top: 30px;
+}
+
+.subtitle {
+  color: #eee;
+  font-family: sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+.input-container {
+  height: 50px;
+  position: relative;
+  width: 100%;
+}
+
+.ic1 {
+  margin-top: 40px;
+}
+
+.ic2 {
+  margin-top: 30px;
+}
+
+.input {
+  background-color: #303245;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  font-size: 18px;
+  height: 100%;
+  outline: 0;
+  padding: 4px 20px 0;
+  width: 100%;
+}
+
+.cut {
+  background-color: #15172b;
+  border-radius: 10px;
+  height: 20px;
+  left: 20px;
+  position: absolute;
+  top: -20px;
+  transform: translateY(0);
+  transition: transform 200ms;
+  width: 76px;
+}
+
+.cut-short {
+  width: 50px;
+}
+
+.input:focus ~ .cut,
+.input:not(:placeholder-shown) ~ .cut {
+  transform: translateY(8px);
+}
+
+.placeholder {
+  color: #65657b;
+  font-family: sans-serif;
+  left: 20px;
+  line-height: 14px;
+  pointer-events: none;
+  position: absolute;
+  transform-origin: 0 50%;
+  transition: transform 200ms, color 200ms;
+  top: 20px;
+}
+
+.input:focus ~ .placeholder,
+.input:not(:placeholder-shown) ~ .placeholder {
+  transform: translateY(-30px) translateX(10px) scale(0.75);
+}
+
+.input:not(:placeholder-shown) ~ .placeholder {
+  color: #808097;
+}
+
+.input:focus ~ .placeholder {
+  color: #dc2f55;
+}
+
+.submit {
+  background-color: #08d;
+  border-radius: 12px;
+  border: 0;
+  box-sizing: border-box;
+  color: #eee;
+  cursor: pointer;
+  font-size: 18px;
+  height: 50px;
+  // outline: 0;
+  text-align: center;
+  width: 20%;
+}
+
+.submit:active {
+  background-color: #06b;
+}
+
+
+</style>
+</head>
+<body>
+<div class="form">
+  <div class="title">Welcome</div>
+  <div class="subtitle">Let's add product!</div>
+  <div class="input-container ic1">
+    <input id="product_name" class="input" type="text" placeholder=" " />
+    <div class="cut"></div>
+    <label for="product_name" class="placeholder">Product name</label>
+  </div>
+  <div class="input-container ic2">
+    <input id="product_price" class="input" type="text" placeholder=" " />
+    <div class="cut"></div>
+    <label for="product_price" class="placeholder">Product price</label>
+  </div>
+  <div class="input-container ic2">
+    <input id="product_ratings" class="input" type="text" placeholder=" " />
+    <div class="cut cut-short"></div>
+    <label for="product_ratings" class="placeholder">Product rating<label/>
+  </div>
+  
+  <div class="input-container ic2">
+  <input id="product_image" class="input" type="file" placeholder=" " />
+  <label for="product_image" class="placeholder">Product image<label/>
+   
+   </div>
+ <button type="text" class="submit" onclick="addItem()" style="position:absolute;margin-top:3%;margin-left:2%;">ADD</button>
+ 
+  <progress id="progress" value="0" max=100 style="position:absolute;margin-top:-5%;display:none"/>
+  
+</div>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.2.2/firebase-analytics.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+var firebaseConfig = {
+   apiKey:"AIzaSyAVEzySXGbzOcz_Gtcrn0LV0ia7ASELR7E",
+   authDomain:"file-b23ef.firebaseapp.com",
+   databaseURL: "https://file-b23ef.firebaseio.com",
+   projectId:"file-b23ef",
+   storageBucket:"file-b23ef.appspot.com",
+   messagingSenderId: "33917125087",
+   appId:"1:33917125087:web:ef42394594cc3b75f0c46a",
+   measurementId: "G-2F095XBJ38"
+ };
+ firebase.initializeApp(firebaseConfig);
+ firebase.analytics();
+function addItem()
+{
+  
+   var myfile=document.querySelector("#product_image").files[0],url=null,fname=null,progress=0;
+   
+   if(myfile!=null)
+   {
+  
+   document.getElementById("progress").style.display="block";	
+   
+   fname=myfile.name;
+   
+   var storageRef = firebase.storage().ref();
+   
+   var metadata = {
+   contentType:myfile.type,
+   };
+   
+   var uploadTask = storageRef.child(myfile.name).put(myfile, metadata);
+   
+   uploadTask.on('state_changed', function(snapshot){
+   progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+   document.getElementById("progress").value=progress;
+   
+   }, function(error) {
+   
+   },
+   function() {
+   uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+   url=downloadURL;
+   $.ajax({url: "addItems.php", 
+   type:"post",
+   data:{product_name:document.getElementById("product_name").value,product_price:document.getElementById("product_price").value,product_ratings:
+   document.getElementById("product_ratings").value,product_image:url},
+   success: function(result){
+   alert("Added Successfully");
+   }});
+   location.reload();
+   }
+   );
+ }
+ );  
+  
+    
+    
+    
+    
+
+}
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <style>
+.courses{
+    
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    -ms-grid-column-align: center;
+ }
+
+.course{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding: 15px;
+}
+.select-style {
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ccc;
+    width: 140px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #fff;
+    background: #fff;
+    position: relative;
+    display:inline;
+    
+}
+
+.select-style select {
+    padding: 5px 8px;
+    border: none;
+    width: 140px;
+    box-shadow: none;
+    background-color: transparent;
+    background-image: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.select-style:after {
+    top: 50%;
+    left: 85%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(0, 0, 0, 0);
+    border-top-color: #000000;
+    border-width: 5px;
+    margin-top: -2px;
+    z-index: 100;
+}
+
+.select-style select:focus {
+    outline: none;
+}
+.glow{
+  margin-top:10;
+  color: #fff;
+  display: inline-block;
+  font-weight:bold;
+  padding: 0;
+  white-space: nowrap;
+  
+  font-size:22;
+  text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 6px #292736, 0 0 8px #292736, 0 0 10px #292736, 0 0 12px #292736, 0 0 14px #292736;
+  animation: glow .59s infinite alternate;
+  }
+  
+
+  @keyframes glow {
+  to {
+  text-shadow: 0 0 4px #fff, 0 0 8px #fff, 0 0 12px #d25ed4, 0 0 16px #d25ed4, 0 0 20px #d25ed4, 0 0 24px #d25ed4, 0 0 28px #d25ed4;
+  }
+  }
+  .g1{
+  text-shadow: 0 0 1px #fff, 0 0 2px #fff, 0 0 6px #292736, 0 0 8px #292736, 0 0 10px #292736, 0 0 12px #292736, 0 0 14px #292736;
+  animation: glow .59s infinite alternate;
+  }
+    </style>
+</head>
+<div>
+    <div class="select-style">
+<select name="course" id="course_name" >
+    <option selected="" disabled="" value="">COURSE NAME</option>
+    <option value="java">JAVA</option>
+  <option value="c">C</option>
+  <option value="python">PYTHON</option>
+  <option value="html">HTML</option>
+  <option value="php">PHP</option>
+  <option value="js">JS</option>
+</select>
+</div>
+<div class="select-style" >
+<select name="course" id="course_level">
+<option selected="" disabled="" value="">COURSE LEVEL</option>
+  <option value="easy">BEGINNER</option>
+  <option value="medium">INTERMEDIATE</option>
+  <option value="hard">ADVANCE</option>
+</select>
+</div>
+    <button onclick="display()" style="display:inline;">Recommend Courses</button>
+<div style="margin-top:100px">
+<div class="courses" id="courses">
+</div>
+</div>
+</div>
+<body>
+    <script>
+      function display()
+      {
+ const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+    let coursesArr = JSON.parse(this.responseText);
+    coursesContainer = document.getElementById('courses');
+    coursesContainer.innerHTML = coursesArr.map(course=>{
+     return `<div class="course" style="display: flex;flex-direction: column; justify-content: space-between; text-align: center; background-color: #231F20;border-radius: 15px; margin-bottom: 25px;margin-right: 5px;  padding: 15px;">
+     <div>
+     <img src=${course.course_profile_link} onClick="window.open('${course.course_link}')" style="cursor: pointer;"  alt="course-image" height="200" width="200"/>
+     <h4 class="glow">${course.course_name}</h4>
+     <h5 style="color:green">Course Level: <spam style="color:red">${course.course_level}</spam></h5>
+     </div></div>`
+     }).join('');
+  }
+  xhttp.open("GET", "https://course-recommedation.herokuapp.com/api/v1/"+document.getElementById('course_name').value+"/"+document.getElementById('course_level').value);
+  xhttp.send();
+      }
+    </script>
+</body>

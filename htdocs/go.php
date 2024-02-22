@@ -1,30 +1,87 @@
 <html>
+<head>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+</head>
 <body>
+<script>
+var ass=0;
+</script>
 <style>
-button{height:30;
+div{
+
+position:absolute;
+left:50%;
+top:50%;
+
+width:80%;
+height:500px;
+margin-top:-250px;
+margin-left:-40%;
+}
+textarea
+{
+word-spacing:5px;
+color:white;
+position:absolute;
+left:50%;
+top:50%;
+width:100%;
+height:500px;
+margin-top:-250px;
+margin-left:-50%;
+background-color: black;
+}
+button{
+top:-7%;
+position:absolute;
+right:0;
+height:30;
 width:70;
   background-color: green;
   border: none;
   color: white;
   font-weight:bold;
-  padding: 16px 32px;
   text-decoration: none;
-  margin: 4px 2px;
+  
   cursor: pointer;}
+
 
 </style>
 
 <?php
+//ini_set('display_errors', 1);
+//ini_set('display_startup_errors', 1);
+
 $val=$_REQUEST["q"];
 if(!$val)
 $val=$_REQUEST["pqpq"];
-mysql_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
-mysql_select_db("epiz_26572955_db1");
 
-$res=mysql_query("select link from table100 where name='$val'");
-$pol=0;
+$mysqli=mysqli_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
+mysqli_select_db($mysqli, "epiz_26572955_db1");
 
-while($row = mysql_fetch_array($res))
+if($val=="ALL")
+{
+echo "<script>  var ass=10;</script>";
+   $ress=mysqli_query($mysqli, "select * from table100 where ftype!='localserver'");
+    while($row= mysqli_fetch_array($ress))
+    {
+        if(strpos($row['ftype'],"pdf")||strpos($row['ftype'],"wordprocessing")||strpos($row['ftype'],"presentation"))
+        echo "<a href='$row[link]'style='text-decoration:none;color:black'><img src='fm.jpg' height='50' width='50' ><br>$row[fname]</a>&nbsp;&nbsp;
+        <a href='https://docs.google.com/gview?embedded=true&url=$row[link]'>only view</a>&nbsp;&nbsp<b>[$row[name]]</b><br><br><br>";
+        else if($row['link'])
+        echo "<a href='$row[link]'style='text-decoration:none;color:black'><img src='fm.jpg' height='50' width='50' ><br>$row[fname]</a>&nbsp;&nbsp<b>[$row[name]]</b><br><br><br>";
+    }
+}
+else{
+
+
+
+
+
+$res=mysqli_query($mysqli, "select link from table100 where name='$val' and ftype!='localserver'");
+$pol=0;$t='';
+
+while($row = mysqli_fetch_array($res))
 { 
     $t=$row['link'];
      $pol+=1;
@@ -32,8 +89,8 @@ while($row = mysql_fetch_array($res))
 
 if($pol>1)
 {   echo "<script>  var ass=10;</script>";
-   $ress=mysql_query("select * from table100 where name='$val'");
-    while($row= mysql_fetch_array($ress))
+   $ress=mysqli_query($mysqli, "select * from table100 where name='$val' and ftype!='localserver'");
+    while($row= mysqli_fetch_array($ress))
     {if(strpos($row['ftype'],"pdf")||strpos($row['ftype'],"wordprocessing")||strpos($row['ftype'],"presentation"))
         echo "<a href='$row[link]'style='text-decoration:none;color:black'><img src='fm.jpg' height='50' width='50' ><br>$row[fname]</a>&nbsp;&nbsp;
         <a href='https://docs.google.com/gview?embedded=true&url=$row[link]'>only view</a><br><br><br>";
@@ -41,10 +98,11 @@ if($pol>1)
         echo "<a href='$row[link]'style='text-decoration:none;color:black'><img src='fm.jpg' height='50' width='50' ><br>$row[fname]</a><br><br><br>";
     }
 }
-else if($pol==1)
+else if($pol==1 && $t!='')
 {
- $res=mysql_query("select * from table100 where name='$val'");
-$row = mysql_fetch_array($res);
+
+$res=mysqli_query($mysqli, "select * from table100 where name='$val'");
+$row = mysqli_fetch_array($res);
 if(strpos($row['ftype'],"pdf")||strpos($row['ftype'],"wordprocessing")||strpos($row['ftype'],"presentation"))
 {  echo "<script> var ass=10;</script>";
 echo "<a href='$row[link]'style='text-decoration:none;color:black'><img src='fm.jpg' height='50' width='50' ><br>$row[fname]</a>&nbsp;&nbsp;
@@ -67,14 +125,18 @@ else
  $myfile = fopen("files/".$val.".txt", "r") ;
 $pl=fgets($myfile);
 while(!feof($myfile)) {
-  $my.=htmlspecialchars(fgets($myfile));
+$my=htmlspecialchars(fgets($myfile));
 
 }}
-
+}
 }
 ?>
-<button onclick="copy()"style="margin-left:730" id="n" style="display:block">COPY</button></b><br>
-<textarea  cols="100" rows="100" id="m" style="display:block"><?=$my?></textarea>
+<div>
+<button onclick="copy()" id="n" style="display:block">COPY</button><br>
+
+<textarea id="m" style="display:block;color:white;background-color:black"><?=$my?></textarea>
+
+</div>
 <script>
 
 if(ass)

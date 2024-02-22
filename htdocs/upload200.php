@@ -1,12 +1,12 @@
 <?php
+$mysqli=mysqli_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
+mysqli_select_db($mysqli, "epiz_26572955_db1");
 $ary=$_REQUEST["q"];
-mysql_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
-mysql_select_db("epiz_26572955_db1");
-$res=mysql_query("select * from table100");
+$res=mysqli_query($mysqli, "select * from table100");
 $ptr=0;
 $re=$ary.'.txt';
 
-while($r=mysql_fetch_assoc($res)){
+while($r=mysqli_fetch_array($res)){
 if($r['name']==$ary||$r['name']==$re)
 {if($r['name']== $re)
  {
