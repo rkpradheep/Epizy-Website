@@ -51,18 +51,16 @@ width:70;
 <?php
 //ini_set('display_errors', 1);
 //ini_set('display_startup_errors', 1);
+require 'dbConnectionUtil.php';
 
 $val=$_REQUEST["q"];
 if(!$val)
 $val=$_REQUEST["pqpq"];
 
-$mysqli=mysqli_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
-mysqli_select_db($mysqli, "epiz_26572955_db1");
-
 if($val=="ALL")
 {
 echo "<script>  var ass=10;</script>";
-   $ress=mysqli_query($mysqli, "select * from table100 where ftype!='localserver'");
+   $ress=executeSelectQuery("select * from table100 where ftype!='localserver'");
     while($row= mysqli_fetch_array($ress))
     {
         if(strpos($row['ftype'],"pdf")||strpos($row['ftype'],"wordprocessing")||strpos($row['ftype'],"presentation"))
@@ -78,7 +76,7 @@ else{
 
 
 
-$res=mysqli_query($mysqli, "select link from table100 where name='$val' and ftype!='localserver'");
+$res=executeSelectQuery("select link from table100 where name='$val' and ftype!='localserver'");
 $pol=0;$t='';
 
 while($row = mysqli_fetch_array($res))
@@ -89,7 +87,7 @@ while($row = mysqli_fetch_array($res))
 
 if($pol>1)
 {   echo "<script>  var ass=10;</script>";
-   $ress=mysqli_query($mysqli, "select * from table100 where name='$val' and ftype!='localserver'");
+   $ress=executeSelectQuery("select * from table100 where name='$val' and ftype!='localserver'");
     while($row= mysqli_fetch_array($ress))
     {if(strpos($row['ftype'],"pdf")||strpos($row['ftype'],"wordprocessing")||strpos($row['ftype'],"presentation"))
         echo "<a href='$row[link]'style='text-decoration:none;color:black'><img src='fm.jpg' height='50' width='50' ><br>$row[fname]</a>&nbsp;&nbsp;
@@ -101,7 +99,7 @@ if($pol>1)
 else if($pol==1 && $t!='')
 {
 
-$res=mysqli_query($mysqli, "select * from table100 where name='$val'");
+$res=executeSelectQuery("select * from table100 where name='$val'");
 $row = mysqli_fetch_array($res);
 if(strpos($row['ftype'],"pdf")||strpos($row['ftype'],"wordprocessing")||strpos($row['ftype'],"presentation"))
 {  echo "<script> var ass=10;</script>";

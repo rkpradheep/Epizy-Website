@@ -1,8 +1,8 @@
 <?php
-$mysqli=mysqli_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
-mysqli_select_db($mysqli, "epiz_26572955_db1");
+require 'dbConnectionUtil.php';
+
 $ary=$_REQUEST["q"];
-$res=mysqli_query($mysqli, "select * from table100");
+$res=executeSelectQuery("select * from table100");
 $ptr=0;
 $re=$ary.'.txt';
 
@@ -28,7 +28,7 @@ echo 'suc';
 }
 else if($ptr==1)
 echo 'd';
-else 
+else
 echo "error";
 
 ?>

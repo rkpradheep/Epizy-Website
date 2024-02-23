@@ -1,8 +1,10 @@
 <?php
+
+require 'dbConnectionUtil.php';
+
 $ary=$_REQUEST["q"];
-$mysqli=mysqli_connect("sql104.epizy.com","epiz_26572955","OsCctiZvPgtgTxY");
-mysqli_select_db($mysqli, "epiz_26572955_db1");
-$aa=mysqli_query($mysqli,"select * from time where date='$ary'");
+
+$aa=executeSelectQuery("select * from time where date='$ary'");
 $t.="\n";
 
 while($row = mysqli_fetch_array($aa))
@@ -17,7 +19,7 @@ while($row = mysqli_fetch_array($aa))
 
 try
 {
-$a=mysqli_query($mysqli,"select * from survey where date='$ary'");
+$a=executeSelectQuery("select * from survey where date='$ary'");
 $row = mysqli_fetch_array($a);
 if($row==null)
  throw new Exception("a");
