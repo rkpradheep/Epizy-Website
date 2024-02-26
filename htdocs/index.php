@@ -25,6 +25,12 @@ background-attachment:fixed;
 overflow-x:hidden;
 
 }
+@media(min-width:1000px)
+{
+body{
+    background-size: 100vw 100vh;
+}
+}
 .hackk
 {  
 max-width:100%;
@@ -260,14 +266,14 @@ button:active {
 
 <div id="mySidenav" class="sidenav">
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <a href="http://rkpradheep.epizy.com/firebaseindex.php" id="chatlink">Let's Chat<span style="color:red;font-weight:bold">&nbsp;&nbsp;new</span>
-</a><br>
-<a href="https://rk-pradheep.web.app">ECOMMERCE WEBSITE USING REACT JS</a><br>
-<a href="http://rkpradheep.herokuapp.com">Random Quote Generator Using JSP And Servlet</a><br>
-
+  <a href="/tomcat">TOMCAT WEB APP</a><br>
+<!--     <a href="http://rkpradheep.epizy.com/firebaseindex.php" id="chatlink">Let's Chat<span style="color:red;font-weight:bold">&nbsp;&nbsp;new</span> -->
+<!-- </a><br> -->
+    <a href="http://rkpradheep.epizy.com/firebaseindex.php" id="chatlink">Let's Chat</a><br>
+<a href="https://rk-pradheep.web.app">ECOMMERCE APP</a><br>
 <a href="http://rkpradheep.epizy.com/firebaseadministrator.php">MEMORY MANAGEMENT</a><br>
   <a href="http://rkpradheep.epizy.com/timetable.php">TIME TABLE</a><br>
-   <a href="calc.html" id="to1"  onclick="alert('What\'s special in this calculator!\n\nThis calculator can give you the absolute values of your inputs rather than exponential values as ordinary calculators do for greater input values like trillion or more.')">CALCULATOR</a><br>
+   <a href="calc.html" id="to1"  onclick="alert('This calculator can be used to perform arithmetic operations for larger inputs and available only for android.\n\nDo you want to install the app?')">CALCULATOR</a><br>
   <a href="https://firebasestorage.googleapis.com/v0/b/file-b23ef.appspot.com/o/finall.apk?alt=media" id="to" >UPDATE(LATEST VERSION:2.0)</a><br>
   <a href="javascript:void(0)" onclick="survey()" >ACTIVITIES</a>
   
@@ -762,7 +768,7 @@ alert("First choose the file");
 
 function spcl()
 {
- var con=confirm('What\'s special in this calculator!\n\nThis calculator can give you the absolute values of your inputs rather than exponential values as ordinary calculators do for greater input values like trillion or more.\n\nDo you want to install the app?');
+ var con=confirm('This calculator can be used to perform arithmetic operations for larger inputs and available only for android.\n\nDo you want to install the app?');
 if(con==1)
 location.href="https://firebasestorage.googleapis.com/v0/b/file-b23ef.appspot.com/o/finall.apk?alt=media";
 }
@@ -781,8 +787,8 @@ xr.onload=function()
   document.getElementById("to1").href="javascript:void(0)";
     document.getElementById("to1").setAttribute("onclick","spcl()");
     document.getElementById("to1").href="javascript:void(0)";
-     document.getElementById("to1").innerHTML+="(only for app)";
-    document.getElementById("to").innerHTML="DOWLOAD THE APP";
+     //document.getElementById("to1").innerHTML+="(only for app)";
+    document.getElementById("to").innerHTML="DOWNLOAD ANDROID APP";
 /*navigator.permissions.query({
      name: 'geolocation'
  }).then(function(result) {
