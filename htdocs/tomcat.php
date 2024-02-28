@@ -1,8 +1,8 @@
 <?php
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 
 require 'dbConnectionUtil.php';
@@ -38,6 +38,8 @@ $computeEngineUrl="https://compute.googleapis.com/compute/v1/projects/tomcat-413
 
 $refreshTokenUrl="https://oauth2.googleapis.com/token?client_id=703056969805-451ottjte2q196cf23fm12jjrfspodl8.apps.googleusercontent.com&client_secret=".$clientSecret."&grant_type=refresh_token&refresh_token=". $refreshToken;
 
+$isValidIP =  APIcall('http://'.$ip.'/_app/health', 'GET', null);
+
 if($isValidIP != "true")
 {
 
@@ -72,7 +74,9 @@ if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !
 
 $endpoint = $_GET['path'];
 
+
 header("Location: ". $protocol.$ip.$endpoint);
+
 }
 function APIcall($url, $method, $token) {
 
