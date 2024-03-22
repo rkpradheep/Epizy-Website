@@ -47,8 +47,15 @@ if($isValidIP != "true")
    {
        if($refreshTokenExpiryTime < $currentTime)
        {
+           if (!isset($_SERVER['HTTPS']))
+            {
+                header("Location: https://rkpradheep.epizy.com/tomcat");
+                return;
+            }
+            else{
            header("Location: https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/compute.readonly&client_id=703056969805-451ottjte2q196cf23fm12jjrfspodl8.apps.googleusercontent.com&state=testing&response_type=code&redirect_uri=https://rkpradheep.epizy.com/tomcat&access_type=offline&prompt=consent");
            return;
+            }
        }
 
        $token= json_decode(APIcall($refreshTokenUrl, 'POST', null), true)['access_token'];
