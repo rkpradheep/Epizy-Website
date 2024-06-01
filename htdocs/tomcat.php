@@ -5,6 +5,12 @@
 // error_reporting(E_ALL);
 
 
+if(!empty($_GET['state']) && $_GET['state'] != 'testing')
+{
+header("Location: ".$_GET['state']."?code=".$_GET['code']);
+return;
+}
+
 require 'dbConnectionUtil.php';
 
 while($r=mysqli_fetch_assoc(executeSelectQuery("select * from tomcat"))){
