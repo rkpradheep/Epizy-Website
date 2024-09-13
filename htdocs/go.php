@@ -123,7 +123,7 @@ else
  $myfile = fopen("files/".$val.".txt", "r") ;
 $pl=fgets($myfile);
 while(!feof($myfile)) {
-$my=htmlspecialchars(fgets($myfile));
+$my.=(fgets($myfile));
 
 }}
 }
